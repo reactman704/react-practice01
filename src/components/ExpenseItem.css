@@ -2,7 +2,7 @@
 .item{
   background-color: var(--mainWhite);
   line-height: 1.5rem;
-  padding: 10px 20px;
+  padding: 10px 10px;
   margin-bottom: 1rem;
   border: 1px solid #e0e0e0;
   display: flex;
