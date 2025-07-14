@@ -60,6 +60,10 @@ const App = () => {
     }
   ])
 
+  const clearItems = () => {
+    setExpense([]);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (charge !== "" && amount > 0){
@@ -91,6 +95,7 @@ const App = () => {
 
 
 
+
   const handleDelete = (id) => {
     const newExpenses = expenses.filter(expense => expense.id !== id)
     console.log(newExpenses);
@@ -118,9 +123,10 @@ const App = () => {
         <div style={{ width:'100%', backgroundColor : 'white', padding : '1rem'}}>
         { /* expense List*/ }
         <ExpenseList 
-          initialExpenses={expenses}
+          expenses={expenses}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          clearItems={clearItems}
         />
         </div>
 
