@@ -13,6 +13,20 @@ const App = () => {
 
   const [amount, setAmount] = useState(0);
 
+  const [edit, setEdit] = useState(false);
+  
+  const [id, setId] = useState('');
+
+  const handleEdit = id => {
+    const expense = expenses.find(item => item.id === id);
+    const { charge, amount } = expense;
+
+    setId(id);
+    setCharge(charge);
+    setAmount(amount);
+    setEdit(true);
+  }
+
   const handleCharge = (e) =>{
     
     setCharge(e.target.value);
@@ -33,7 +47,7 @@ const App = () => {
     {
       id: 1,
       charge: '렌트비',
-      amount: '1600'
+      amount: 1600
     },
     { id: 2, 
       charge: '교통비', 
@@ -49,12 +63,24 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (charge !== "" && amount > 0){
-      const newExpense = {id: crypto.randomUUID(), charge, amount}
-      const newExpenses = [...expenses, newExpense];
-      setExpense(newExpenses);
+      if(edit){
+        const newExpenses = expenses.map(item=>{
+          return item.id === id ? {...item, charge, amount} : item
+        })
+        setExpense(newExpenses);
+        setEdit(false);
+        handleAlert({ type: 'success', text: '아이템이 수정되었습니다' });
+      }
+      else{
+        const newExpense = {id: crypto.randomUUID(), charge, amount}
+        const newExpenses = [...expenses, newExpense];
+        setExpense(newExpenses);
+        handleAlert({type: 'success', text:'아이템이 생성되었습니다.'});
+      }
+
       setCharge('');
       setAmount(0);
-      handleAlert({type: 'success', text:'아이템이 생성되었습니다.'});
+      
     }
 
     else{
@@ -85,6 +111,7 @@ const App = () => {
           charge = {charge}
           amount = {amount}
           handleSubmit = {handleSubmit}
+          edit={edit}
         />
         </div>
 
@@ -93,13 +120,19 @@ const App = () => {
         <ExpenseList 
           initialExpenses={expenses}
           handleDelete={handleDelete}
+          handleEdit={handleEdit}
         />
         </div>
 
         <div style={{ display:'flex',justifyContent:'end', marginTop: '1rem' }}>
           <p style={{ fontSize:'2rem' }}>
             총지출:
-            <span>원</span>
+            <span>
+              {expenses.reduce((acc, curr) => {
+                return (acc + curr.amount);
+              }, 0)}
+              원
+            </span>
           </p>
         </div>
       </main>
