@@ -31,7 +31,13 @@
   padding: 1px 3px;
 }
 
+.icon-wrap{
+  display: flex;
+  align-items: center;
+}
+
 .clear-btn, .edit-btn{
+  display: flex;
   background: none;
   border: none;
   font-size: 1.2rem;

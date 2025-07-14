@@ -9,8 +9,8 @@ const ExpenseItem = ({ expense, handleDelete, handleEdit }) => {
           <span className='expense'>{expense.charge}</span>
           <span className='amount'>{expense.amount} 원</span>
         </div>
-        <div>
-          <button className='edit-btn' 
+        <div className='icon-wrap'>
+          <button className='edit-btn'
             onClick={()=>handleEdit(expense.id)}>
             <MdEdit/>
           </button>
